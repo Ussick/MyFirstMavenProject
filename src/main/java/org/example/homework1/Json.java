@@ -1,4 +1,4 @@
-package homework1;
+package org.example.homework1;
 
 import com.google.gson.*;
 
@@ -9,50 +9,43 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-
-
 public class Json {
-    public static final Gson GSON=new GsonBuilder().setPrettyPrinting().create();
+    public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     private static void toFillFile(List<String> info, File file) {
-
-        Person person =new Person();
+        Person person = new Person();
         person.setName(info.get(0));
         person.setAge(Integer.parseInt(info.get(1)));
-        String str=GSON.toJson(person);
-
+        String str = GSON.toJson(person);
         System.out.println(str);
 
-
-            try (FileOutputStream fos=new FileOutputStream(file,true)){
-                fos.write((str+System.lineSeparator()).getBytes());
-                fos.flush();
-            }catch (IOException e){
-                e.printStackTrace();
-            }
-
-
+        try (FileOutputStream fos = new FileOutputStream(file, true)) {
+            fos.write((str + System.lineSeparator()).getBytes());
+            fos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
 
-        List<String> info=new ArrayList<>();
-        int i=0;
+        List<String> info = new ArrayList<>();
+        int i = 0;
 
-        Scanner in =new Scanner(System.in);
-        String line=in.nextLine();
-        while (!line.equals("end")){
+        Scanner in = new Scanner(System.in);
+        String line = in.nextLine();
+        while (!line.equals("end")) {
             info.add(line);
-            line=in.nextLine();
+            line = in.nextLine();
             i++;
-            if(i==2){
+            if (i == 2) {
                 break;
             }
         }
 
-        String fileName="D:/java course/Java advance/1 lesson/myJSON.json";
-        File file=new File(fileName);
-        if (!file.exists()){
+        String fileName = "D:/java course/Java advance/1 lesson/myJSON.json";
+        File file = new File(fileName);
+        if (!file.exists()) {
             try {
                 file.createNewFile();
             } catch (IOException e) {
@@ -67,7 +60,7 @@ public class Json {
 
 }
 
-class Person{
+class Person {
     private String name;
     private int age;
 

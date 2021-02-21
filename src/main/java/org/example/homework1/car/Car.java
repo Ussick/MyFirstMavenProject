@@ -6,18 +6,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.nio.ByteBuffer;
-import java.nio.channels.Channel;
-import java.nio.channels.FileChannel;
 
 public class Car {
-        private String brand;
-        private String model;
-        private String color;
-        private Maxspeed maxspeed;
-        private Engine engine;
-        private int seatingCapacity;
-        public static final Gson GSON=new GsonBuilder().setPrettyPrinting().create();
+    private String brand;
+    private String model;
+    private String color;
+    private Maxspeed maxspeed;
+    private Engine engine;
+    private int seatingCapacity;
+    public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public Car() {
     }
@@ -82,13 +79,13 @@ public class Car {
                 '}';
     }
 
-    public void toMakeJson() throws IOException {
-        String str=GSON.toJson(this);
+    public void toMakeJson() {
+        String str = GSON.toJson(this);
         System.out.println(str);
 
-        String fileName="D:/java course/Java advance/1 lesson/car.json";
-        File file=new File(fileName);
-        if (!file.exists()){
+        String fileName = "D:/java course/Java advance/1 lesson/car.json";
+        File file = new File(fileName);
+        if (!file.exists()) {
             try {
                 file.createNewFile();
             } catch (IOException e) {
@@ -96,31 +93,29 @@ public class Car {
             }
         }
         try {
-            RandomAccessFile afile=new RandomAccessFile(file, "rw");
+            RandomAccessFile afile = new RandomAccessFile(file, "rw");
             afile.writeBytes(str);
         } catch (FileNotFoundException exception) {
             exception.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-
-
     }
 
     public static void main(String[] args) throws IOException {
-        Car car=new Car();
+        Car car = new Car();
         car.setBrand("Toyota");
         car.setModel("Camry");
         car.setColor("Red");
-        Maxspeed maxspeed=new Maxspeed();
+        Maxspeed maxspeed = new Maxspeed();
         maxspeed.setUnit("km/h");
         maxspeed.setValue(220);
         car.setMaxspeed(maxspeed);
-        Engine engine=new Engine();
+        Engine engine = new Engine();
         engine.setVolume(2.5);
         engine.setRpm(6600);
         engine.setCompressionRatio("11.8:1");
         car.setEngine(engine);
         car.toMakeJson();
-
     }
 }

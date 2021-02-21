@@ -22,23 +22,22 @@ public class AppH3 {
         List<String> strings = getList();
 
         strings.sort((a, b) -> {
-            if (a.length()==b.length()){
+            if (a.length() == b.length()) {
                 return a.toLowerCase().compareTo(b.toLowerCase());
+            } else {
+                return a.length() - b.length();
             }
-            else {
-                return a.length()-b.length();
-            }
-        } ); //сюда написать компаратор (любда)
+        }); //сюда написать компаратор (любда)
 
         System.out.println(strings);
 
         System.out.println("************");
 
-        strings.forEach((a)-> System.out.printf(a.toUpperCase()+" "));
+        strings.forEach((a) -> System.out.printf(a.toUpperCase() + " "));
 
         System.out.println("\n************");
 
-        strings.forEach((a)-> System.out.printf(StringUtils.capitalize(a)+" "));
+        strings.forEach((a) -> System.out.printf(StringUtils.capitalize(a) + " "));
 
     }
 

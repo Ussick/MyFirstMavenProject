@@ -1,7 +1,6 @@
 package org.example.homework4;
 
 
-
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.*;
@@ -30,32 +29,30 @@ public class Java8Aggregator implements Aggregator {
 
     @Override
     public Map<String, Long> getMostFrequentWords(List<String> words, long limit) {
-        try {
-            Map<String, Long> result = words.stream().map(String::toUpperCase).collect(Collectors.groupingBy(Function.identity(),
-                    Collectors.counting()));
-            for (Map.Entry<String, Long> entry : result.entrySet()) {
-                if (entry.getValue() > limit) {
-                    entry.setValue(limit);
-                }
+        Map<String, Long> result = words.stream()
+                .map(String::toUpperCase)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        for (Map.Entry<String, Long> entry : result.entrySet()) {
+            if (entry.getValue() > limit) {
+                throw new UnsupportedOperationException();
             }
-            return result;
-        } catch (UnsupportedOperationException e) {
-            throw new UnsupportedOperationException();
         }
+        return result;
     }
 
     @Override
     public List<String> getDuplicates(List<String> words, long limit) {
-        try {
-            List<String> tmp = words.stream().map(String::toUpperCase).collect(Collectors.toList());
-            List<String> duplicates = tmp.stream()
-                    .filter(x -> (Collections.frequency(tmp, x) > 1 && Collections.frequency(tmp, x) <= limit))
-                    .distinct()
-                    .collect(Collectors.toList());
-            return duplicates;
-        } catch (UnsupportedOperationException e) {
-            throw new UnsupportedOperationException();
-        }
+        List<String> tmp = words.stream().map(String::toUpperCase).collect(Collectors.toList());
+        tmp.forEach(x -> {
+            if (Collections.frequency(tmp, x) > limit) {
+                throw new UnsupportedOperationException();
+            }
+        });
+        List<String> duplicates = tmp.stream()
+                .filter(x -> Collections.frequency(tmp, x) > 1 && Collections.frequency(tmp, x) <= limit)
+                .distinct()
+                .collect(Collectors.toList());
+        return duplicates;
     }
 
     public static void main(String[] args) {
@@ -65,10 +62,10 @@ public class Java8Aggregator implements Aggregator {
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
         List<String> strings = List.of("PHP", "JS", "java", "jS", "Python", "java", "Java", "JaVA", "AAA", "aaa", "aaA");
-        Map<String, Long> map = java8Aggregator.getMostFrequentWords(strings, 3);
+        Map<String, Long> map = java8Aggregator.getMostFrequentWords(strings, 4);
         System.out.println(map);
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
-        System.out.println(java8Aggregator.getDuplicates(strings, 3));
+        System.out.println(java8Aggregator.getDuplicates(strings, 4));
     }
 }

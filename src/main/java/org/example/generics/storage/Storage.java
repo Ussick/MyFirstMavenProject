@@ -1,7 +1,10 @@
 package org.example.generics.storage;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Storage<T extends Book> {
     private T book;
@@ -30,6 +33,5 @@ public class Storage<T extends Book> {
         List<Broshure> broshures = new ArrayList<>();
         bookStorage.addAll(broshures);
         System.out.println(wildcardsTest(new ArrayList<>()));
-
     }
 }
